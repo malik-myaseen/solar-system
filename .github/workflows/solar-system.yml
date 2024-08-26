@@ -36,4 +36,4 @@ jobs:
               with:
                 name: Mocha-Test-Result
                 path: artifact/world.xml
-                if-no-files-found: 
+                if-no-files-found: error
