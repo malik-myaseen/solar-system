@@ -32,7 +32,8 @@ jobs:
               run: npm test
                 
             - name: Archive testing Results
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: Mocha-Test-Result
-                path: test-resutls.xml
+                path: artifact/world.xml
+                if-no-files-found: 
