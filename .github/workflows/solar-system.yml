@@ -42,7 +42,7 @@ jobs:
             - name: Archive Test Results
               uses: actions/upload-artifact@v4
               with:
-                name: Mocha-Test-Result
+                name: Mocha-Test-Result-with-v4
                 path: test-results.xml
 
     code-coverage:
@@ -67,7 +67,7 @@ jobs:
             - name: Archive test result
               uses: actions/upload-artifact@v4
               with:
-                name: Code-Coverage-Result
+                name: Code-Coverage-Result-with-v4
                 path: coverage
                 retention-days: 5
 
