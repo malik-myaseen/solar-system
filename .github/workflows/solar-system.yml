@@ -1,13 +1,12 @@
 name: Solar System workflow
 
 on:
-    
+    workflow_dispatch: 
     push: 
         branches: 
             - main
             - 'feature/*'
-    
-    workflow_dispatch: 
+ 
 env:
     MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
     MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
@@ -29,7 +28,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Checkout NodeJS version - ${{ matrix.nodejs_version }}
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v3
               with:
                 node-version: ${{ matrix.nodejs_version }}
             
@@ -40,10 +39,10 @@ jobs:
               run: npm test
                 
             - name: Archive Test Results
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v3
               with:
-                name: Mocha-Test-Result-with-v4
-                path: test-result.xml
+                name: Mocha-Test-Result
+                path: test-results.xml
 
     code-coverage:
         name: Code Coverage
@@ -53,7 +52,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Check NodeJS version - 18
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v3
               with:
                 node-version: 18
 
@@ -65,10 +64,10 @@ jobs:
               run: npm run coverage
 
             - name: Archive test result
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v3
               with:
-                name: Code-Coverage-Result-with-v4
-                path: coverages
+                name: Code-Coverage-Result
+                path: coverage
                 retention-days: 5
 
                 
