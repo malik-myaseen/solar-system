@@ -43,7 +43,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: Mocha-Test-Result-with-v4
-                path: test-results.xml
+                path: test-result.xml
 
     code-coverage:
         name: Code Coverage
@@ -68,7 +68,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: Code-Coverage-Result-with-v4
-                path: coverage
+                path: coverages
                 retention-days: 5
 
                 
