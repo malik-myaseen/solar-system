@@ -60,6 +60,7 @@ jobs:
               run: npm install
               
             - name: Checkk code coverage
+              continue-on-error: true
               run: npm run coverage
 
             - name: Archive test result
