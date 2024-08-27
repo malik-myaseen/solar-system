@@ -8,7 +8,7 @@ on:
             - 'feature/*'
  
 env:
-    MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+    MONGO_URI: ${{ vars.MONGO_URI }}
     MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}            
 
@@ -97,4 +97,27 @@ jobs:
               with:
                 username: ${{ vars.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_PASSWORD }}
-                
+            
+            - name: Build for testing
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                push: false 
+                tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}  #it will use commit github commit id over here as tag
+
+            - name: Docker Image Test
+              run: |
+                docker images
+                docker run --name solar-system-app \
+                    -p 3000:3000 \
+                    -e MONGO_URI=${{ vars.MONGO_URI }} \
+                    -e MONGO_USERNAME=${{ vars.MONGO_USERNAME }} \
+                    -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+                    ${{ vars.MONGO_USERNAME }}/solar-system:${{ github.sha }}
+    
+                export IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' solar-system-app)
+                echo $IP
+
+                echo Testing Image URL using wget
+                wget -q -O - 127.0.0.1:3000/live | grep live
+
