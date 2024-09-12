@@ -184,3 +184,24 @@ jobs:
           - name: Check file
             run: | 
               cat kubernetes/development/*.yaml
+
+          - name: Create Mongo DB Secrets
+            run: |
+
+              kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \     # provide namespace where i want to create secrets in cluster, mongo-db-creds is name of create in deploment.yaml file 
+              --from-literal=MONGO_URI= ${{ vars.MONGO_URI }} \
+              --from-literal=MONGO_USERNAME= ${{ vars.MONGO_USERNAME }} \
+              --from-literal=MONGO_PASSWORD= ${{ secrets.MONGO_PASSWORD }} \
+              --save-config \
+              --dry-run=client \
+              -o yaml | kubectl -f -
+
+
+    #deploy the application
+          - name: Deploy to Dev Env
+            run: |
+              kubectl apply -f kubernetes\development
+
+    #when we deploy the app it fail becz we dont config the mongo db screates which we mentioned in the deployment.yaml file
+    #so we need to secrets of mongo db in the cluster first then it will deploy 
+
