@@ -167,7 +167,7 @@ jobs:
         
           - name: Save Nginx IP as Github Environment variable 
             run: | #geting ingress ip,  declearing and passing the value of ingressip to github environment variable 
-              echo: "INGRESS_IP=$(kubectl -n default get services my-release-nginx-ingress-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
+              echo "INGRESS_IP=$(kubectl -n default get services my-release-nginx-ingress-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
 
           - name: Replace the Token in Menifest file
             uses: cschleiden/replace-tokens@v1
