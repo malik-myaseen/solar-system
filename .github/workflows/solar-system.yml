@@ -184,11 +184,10 @@ jobs:
           - name: Check file
             run: | 
               cat kubernetes/development/*.yaml
-
+#  provide namespace where i want to create secrets in cluster, mongo-db-creds is name of create in deploment.yaml file
           - name: Create Mongo DB Secrets
             run: |
-
-              kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \     # provide namespace where i want to create secrets in cluster, mongo-db-creds is name of create in deploment.yaml file 
+              kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \     
               --from-literal=MONGO_URI=${{ vars.MONGO_URI }} \
               --from-literal=MONGO_USERNAME=${{ vars.MONGO_USERNAME }} \
               --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
