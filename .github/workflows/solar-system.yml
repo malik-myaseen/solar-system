@@ -202,7 +202,7 @@ jobs:
     #deploy the application
           - name: Deploy to Dev Env
             run: |
-              kubectl apply -f kubernetes/development
+              kubectl apply -f kubernetes/development  
 
     #when we deploy the app it fail becz we dont config the mongo db screates which we mentioned in the deployment.yaml file
     #so we need to secrets of mongo db in the cluster first then it will deploy 
